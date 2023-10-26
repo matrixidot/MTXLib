@@ -1,0 +1,6 @@
+name: MTXLib
+version: '${project.version}'
+main: me.neo.mtxlib.MTXLib
+api-version: 1.19
+authors: [ N3E0, man_in_matrix]
+description: A library plugin that Matrix uses in his plugins.
