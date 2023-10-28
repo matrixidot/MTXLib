@@ -24,13 +24,13 @@ public class TwistListener implements Listener {
             return;
         boolean doesStash = false;
         for (ItemTwist it : toReclaim) {
-            if (player.getInventory().contains(it.getCustomItem()))
+            if (player.getInventory().contains(it.getCustomItem().getItem()))
                 continue;
             if (player.getInventory().firstEmpty() == -1) {
-                ItemStash.get(player.getUniqueId()).addItem(it.getCustomItem());
+                ItemStash.get(player.getUniqueId()).addItem(it.getCustomItem().getItem());
                 doesStash = true;
             } else {
-                player.getInventory().addItem(it.getCustomItem());
+                player.getInventory().addItem(it.getCustomItem().getItem());
             }
         }
         player.sendMessage(ChatColor.RED + "You seem to have lost some twist-specific items!");
