@@ -86,10 +86,10 @@ public abstract class Twist implements Listener {
     }
 
     protected void onRegister() {
-        MTXLib.log.info("Registered twist: " + getName() + ".");
+        MTXLib.log.info("Registered twist: " + name + ".");
     }
 
     protected void onUnregister() {
-        MTXLib.log.info("Unregistered twist: " + getName() + ".");
+        MTXLib.log.info("Unregistered twist: " + name + ".");
     }
 }

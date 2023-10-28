@@ -1,6 +1,8 @@
 package me.neo.mtxlib.api.item;
 
 import me.neo.mtxlib.MTXLib;
+import me.neo.mtxlib.api.customevents.RegisterItemEvent;
+import me.neo.mtxlib.api.customevents.UnregisterItemEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -49,7 +51,7 @@ public class MTXItemManager {
         Bukkit.getPluginManager().callEvent(event);
 
         if (event.isCancelled()) {
-            MTXLib.log.info("Registering event for item: " + item.getName() + " was cancelled.")
+            MTXLib.log.info("Registering event for item: " + item.getName() + " was cancelled.");
             return false;
         }
         items.add(item);
@@ -79,4 +81,6 @@ public class MTXItemManager {
         MTXLib.log.success("Item: " + item.getName() + " unregistered");
         return true;
     }
+
+
 }

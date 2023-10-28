@@ -18,6 +18,9 @@ public class MTXLib {
     /* TWIST API FIELDS */
     private static NamespacedKey twistInternalKey;
 
+    /* ITEM API FIELDS */
+    private static NamespacedKey mtxItemInternalKey;
+
     /**
      * Call this method in your plugin's onLoad method.
      * Sets fields and sets up CommandAPI
@@ -28,6 +31,7 @@ public class MTXLib {
     public static <T extends JavaPlugin> void onLoad(T plugin, boolean logDebug) {
         parentPlugin = plugin;
         twistInternalKey = new NamespacedKey(plugin, "MTXLib.TwistAPI.ItemTwist.Internal.Identifier");
+        mtxItemInternalKey = new NamespacedKey(plugin, "MTXLib.ItemAPI.MTXItem.Internal.Identifier");
         CommandAPI.onLoad(new CommandAPIBukkitConfig(plugin).verboseOutput(true));
         log = new Log("[MTXLib]: ", logDebug);
     }
@@ -55,6 +59,12 @@ public class MTXLib {
     }
     public static NamespacedKey getTwistInternalKey() {
         return twistInternalKey;
+    }
+    public static String getItemInternalString() {
+        return "MTXLib.ItemAPI.MTXItem.Internal.Identifier";
+    }
+    public static NamespacedKey getMtxItemInternalKey() {
+        return mtxItemInternalKey;
     }
 
 }
