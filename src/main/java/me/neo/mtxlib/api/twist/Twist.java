@@ -2,6 +2,7 @@ package me.neo.mtxlib.api.twist;
 
 import jdk.jfr.Registered;
 import me.neo.mtxlib.MTXLib;
+import me.neo.mtxlib.api.registering.MTXRegistrable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public abstract class Twist implements Listener {
+public abstract class Twist<T> implements MTXRegistrable<T> {
     private final ArrayList<UUID> boundPlayers = new ArrayList<>();
 
     private final String name;
@@ -85,11 +86,11 @@ public abstract class Twist implements Listener {
         return unbindPlayer(Bukkit.getPlayer(player), unregistered);
     }
 
-    protected void onRegister() {
+    public void onRegister() {
         MTXLib.log.info("Registered twist: " + name + ".");
     }
 
-    protected void onUnregister() {
+    public void onUnregister() {
         MTXLib.log.info("Unregistered twist: " + name + ".");
     }
 }

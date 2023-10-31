@@ -7,7 +7,7 @@ import org.bukkit.event.Listener;
  * Any class implementing this can also handle events
  * @param <T> The Implementing class
  */
-public interface MTXRegisterable<T> extends Listener {
+public interface MTXRegistrable<T> extends Listener {
     String getName();
 
     int getId();

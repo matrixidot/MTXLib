@@ -1,6 +1,8 @@
 package me.neo.mtxlib.api.registering;
 
 import me.neo.mtxlib.MTXLib;
+import me.neo.mtxlib.api.customevents.RegisterMTXRegistrableEvent;
+import me.neo.mtxlib.api.customevents.UnregisterMTXRegistrableEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -10,17 +12,17 @@ import java.util.ArrayList;
 /**
  * Used to store and retrieve any objects you want to be registered
  * Ex: Twists, MTXItems...
- * You can define your own class to register using the {@link MTXRegisterable} Interface.
+ * You can define your own class to register using the {@link MTXRegistrable} Interface.
  */
 public class MTXRegistry {
     private MTXRegistry() {}
 
-    public static ArrayList<MTXRegisterable<?>> registered = new ArrayList<>();
+    public static ArrayList<MTXRegistrable<?>> registered = new ArrayList<>();
     public static ArrayList<String> registeredNames = new ArrayList<>();
 
     @Nullable
-    public static <T extends MTXRegisterable<?>> MTXRegisterable<?> get(Class<T> clazz) {
-        for (MTXRegisterable<?> r : registered) {
+    public static <T extends MTXRegistrable<?>> MTXRegistrable<?> get(Class<T> clazz) {
+        for (MTXRegistrable<?> r : registered) {
             if (clazz == r.getClass())
                 return r;
         }
@@ -28,8 +30,8 @@ public class MTXRegistry {
     }
 
     @Nullable
-    public static MTXRegisterable<?> get(String name) {
-        for (MTXRegisterable<?> r : registered) {
+    public static MTXRegistrable<?> get(String name) {
+        for (MTXRegistrable<?> r : registered) {
             if (r.getName().toLowerCase().equals(name))
                 return r;
         }
@@ -37,21 +39,21 @@ public class MTXRegistry {
     }
 
     @Nullable
-    public static MTXRegisterable<?> get(int id) {
-        for (MTXRegisterable<?> r : registered) {
+    public static MTXRegistrable<?> get(int id) {
+        for (MTXRegistrable<?> r : registered) {
             if (r.getId() == id)
                 return r;
         }
         return null;
     }
 
-    public static boolean tryRegister(MTXRegisterable<?> r, JavaPlugin plugin) {
+    public static boolean tryRegister(MTXRegistrable<?> r, JavaPlugin plugin) {
         if (registered.contains(r)) {
             MTXLib.log.warn("While trying to register: " + r.getName() + " it is already registered.");
             return false;
         }
 
-        RegisterMTXRegisterableEvent event = new RegisterMTXRegisterableEvent(twist);
+        RegisterMTXRegistrableEvent event = new RegisterMTXRegistrableEvent(r);
         Bukkit.getPluginManager().callEvent(event);
 
         if (event.isCancelled()) {
@@ -64,6 +66,27 @@ public class MTXRegistry {
         r.onRegister();
         Bukkit.getPluginManager().registerEvents(r, plugin);
         MTXLib.log.success(r.getName() + " registered.");
+        return true;
+    }
+
+    public static boolean tryUnregister(MTXRegistrable<?> r) {
+        if (!registered.contains(r)) {
+            MTXLib.log.warn("While trying to unregister: " + r.getName() + " it was not registered.");
+            return false;
+        }
+
+        UnregisterMTXRegistrableEvent event = new UnregisterMTXRegistrableEvent(r);
+        Bukkit.getPluginManager().callEvent(event);
+
+        if (event.isCancelled()) {
+            MTXLib.log.info("Unregistering event for: " + r.getName() + " was cancelled, it will not be unregistered.");
+            return false;
+        }
+
+        registered.remove(r);
+        registeredNames.remove(r.getName());
+        r.onUnregister();
+        MTXLib.log.success(r.getName() + "unregistered.");
         return true;
     }
 }

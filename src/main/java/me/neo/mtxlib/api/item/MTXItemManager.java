@@ -1,8 +1,6 @@
 package me.neo.mtxlib.api.item;
 
 import me.neo.mtxlib.MTXLib;
-import me.neo.mtxlib.api.customevents.RegisterItemEvent;
-import me.neo.mtxlib.api.customevents.UnregisterItemEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;

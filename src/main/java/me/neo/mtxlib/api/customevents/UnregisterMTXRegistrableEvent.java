@@ -1,26 +1,21 @@
 package me.neo.mtxlib.api.customevents;
 
-import me.neo.mtxlib.api.twist.Twist;
+import me.neo.mtxlib.api.registering.MTXRegistrable;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-
-/**
- * Fired immediately before a {@link me.neo.mtxlib.api.twist.Twist} is registered.
- * Event can be cancelled
- */
-public class RegisterTwistEvent extends Event implements Cancellable {
+public class UnregisterMTXRegistrableEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
 
     private boolean cancelled;
 
-    private final Twist twist;
+    private final MTXRegistrable<?> registrable;
 
-    public RegisterTwistEvent(Twist twist) {
+    public UnregisterMTXRegistrableEvent(MTXRegistrable<?> registrable) {
         cancelled = false;
-        this.twist = twist;
+        this.registrable = registrable;
     }
 
     @NotNull
@@ -34,11 +29,11 @@ public class RegisterTwistEvent extends Event implements Cancellable {
     }
 
     /**
-     * Returns the {@link me.neo.mtxlib.api.twist.Twist} being registered.
-     * @return The twist being registered.
+     * Returns the {@link MTXRegistrable} being registered.
+     * @return The twist being unregistered.
      */
-    public Twist getTwist() {
-        return twist;
+    public MTXRegistrable<?> getRegistrable() {
+        return registrable;
     }
 
     /**

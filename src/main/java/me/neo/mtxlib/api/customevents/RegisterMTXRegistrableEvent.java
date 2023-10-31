@@ -1,26 +1,21 @@
 package me.neo.mtxlib.api.customevents;
 
-import me.neo.mtxlib.api.twist.Twist;
+import me.neo.mtxlib.api.registering.MTXRegistrable;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-
-/**
- * Fired immediately before a {@link me.neo.mtxlib.api.twist.Twist} is unregistered.
- * Event can be cancelled
- */
-public class UnregisterTwistEvent extends Event implements Cancellable {
+public class RegisterMTXRegistrableEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
 
     private boolean cancelled;
 
-    private final Twist twist;
+    private final MTXRegistrable<?> registrable;
 
-    public UnregisterTwistEvent(Twist twist) {
+    public RegisterMTXRegistrableEvent(MTXRegistrable<?> registerable) {
         cancelled = false;
-        this.twist = twist;
+        this.registrable = registerable;
     }
 
     @NotNull
@@ -34,15 +29,15 @@ public class UnregisterTwistEvent extends Event implements Cancellable {
     }
 
     /**
-     * Returns the {@link me.neo.mtxlib.api.twist.Twist} being unregistered.
-     * @return The twist being unregistered.
+     * Returns the {@link MTXRegistrable} being registered.
+     * @return The twist being registered.
      */
-    public Twist getTwist() {
-        return twist;
+    public MTXRegistrable<?> getRegistrable() {
+        return registrable;
     }
 
     /**
-     * Gets the cancellation state of this event. Set to true if you do not want the twist to be unregistered.
+     * Gets the cancellation state of this event. Set to true if you do not want the twist to be registered.
      * @return If the event is cancelled or not.
      */
     @Override
@@ -52,8 +47,8 @@ public class UnregisterTwistEvent extends Event implements Cancellable {
 
     /**
      * Sets the cancellation state of this event. A canceled event will not be executed in the server, but will still pass to other plugins.
-     * Cancelling this event will prevent the twist from being unregistered.
-     * This may cause unintended behaviour so be cautious when cancelling this event.
+     * Cancelling this event will prevent the twist from being registered and added to the command pools.
+     * This can cause null exceptions if the twist is expected to be present so be cautious when cancelling this event.
      * @param cancel True if you want to cancel this event.
      */
     @Override

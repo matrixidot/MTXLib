@@ -4,6 +4,8 @@ import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.CommandPermission;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.GreedyStringArgument;
+import me.neo.mtxlib.api.registering.MTXRegistrable;
+import me.neo.mtxlib.api.registering.MTXRegistry;
 import me.neo.mtxlib.api.twist.ItemStash;
 import me.neo.mtxlib.api.twist.ItemTwist;
 import me.neo.mtxlib.api.twist.Twist;
@@ -30,11 +32,11 @@ public class TwistCommands {
     public void giveTwist() {
         new CommandAPICommand("giveTwist")
                 .withAliases("gt")
-                .withArguments(new GreedyStringArgument("Twist Name").replaceSuggestions(ArgumentSuggestions.strings(TwistManager.twistNames)))
+                .withArguments(new GreedyStringArgument("Twist Name").replaceSuggestions(ArgumentSuggestions.strings(MTXRegistry.registeredNames)))
                 .withPermission(CommandPermission.OP)
                 .executesPlayer((sender, args) -> {
                     String twistName = (String) args.get(0);
-                    Twist twist = TwistManager.get(twistName);
+                    Twist<?> twist = (Twist<?>) MTXRegistry.get(twistName);
                     if (twist == null) {
                         sender.sendMessage(ChatColor.DARK_RED + "Invalid twist inputted");
                     } else {
