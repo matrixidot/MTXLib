@@ -1,4 +1,4 @@
-package me.neo.mtxlib.api.registering;
+package me.neo.mtxlib.api.core;
 
 import org.bukkit.event.Listener;
 

@@ -2,11 +2,6 @@ package me.neo.mtxlib;
 
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
-import me.neo.mtxlib.api.listeners.TwistListener;
-import me.neo.mtxlib.api.twist.TwistManager;
-import me.neo.mtxlib.commands.TwistCommands;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -37,11 +32,6 @@ public class MTXLib {
     }
 
     public static <T extends JavaPlugin> void onEnable(T plugin) {
-        new TwistCommands(plugin);
-        Bukkit.getPluginManager().registerEvents(new TwistListener(), plugin);
-        for (String string : TwistManager.twistNames) {
-            MTXLib.log.success("Twist registered: " + string);
-        }
     }
 
     public static void onDisable() {

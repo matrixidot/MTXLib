@@ -1,6 +1,6 @@
 package me.neo.mtxlib.api.customevents;
 
-import me.neo.mtxlib.api.registering.MTXRegistrable;
+import me.neo.mtxlib.api.core.MTXRegistrable;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;

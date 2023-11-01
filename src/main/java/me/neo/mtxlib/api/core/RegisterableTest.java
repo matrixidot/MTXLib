@@ -1,4 +1,4 @@
-package me.neo.mtxlib.api.registering;
+package me.neo.mtxlib.api.core;
 
 public class RegisterableTest implements MTXRegistrable<RegisterableTest> {
     @Override
