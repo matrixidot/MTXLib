@@ -1,5 +1,7 @@
 package me.neo.mtxlib.api.twist;
 
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -67,7 +69,7 @@ public class ItemStash {
             player.sendMessage(ChatColor.GREEN + "All items claimed.");
             return;
         }
-        ItemTwist.doRemoveStashText(player, itemsClaimed);
+        doRemoveStashText(player, itemsClaimed);
     }
 
     public ItemStack getItem(int index) {
@@ -80,5 +82,34 @@ public class ItemStash {
 
     public ArrayList<ItemStack> getItems() {
         return items;
+    }
+
+    public static void doAddStashText(Player player) {
+        player.sendMessage(ChatColor.GREEN + "Your inventory is full so the item was added to your stash!");
+        player.sendMessage(ChatColor.GREEN + "You have " + ChatColor.RED + ItemStash.get(player.getUniqueId()).getItems().size() + " in your stash!");
+
+        TextComponent filler = new TextComponent("§eClick ");
+
+        TextComponent clickable = new TextComponent("§6§lHERE");
+        clickable.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ct"));
+
+        TextComponent filler1 = new TextComponent(" §eto claim the items, or run /ct.");
+
+        player.spigot().sendMessage(filler, clickable, filler1);
+    }
+
+
+    public static void doRemoveStashText(Player player, int itemsClaimed) {
+        player.sendMessage(ChatColor.RED + "Your inventory was full, but you claimed " + ChatColor.RED + itemsClaimed + " items!");
+        player.sendMessage(ChatColor.YELLOW + "You still have " + ChatColor.RED + ItemStash.get(player.getUniqueId()).getItems().size() + " items left!");
+
+        TextComponent filler = new TextComponent("§eClick ");
+
+        TextComponent clickable = new TextComponent("§6§lHERE");
+        clickable.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ct"));
+
+        TextComponent filler1 = new TextComponent(" §eto claim the items, or run /ct.");
+
+        player.spigot().sendMessage(filler, clickable, filler1);
     }
 }

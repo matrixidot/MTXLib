@@ -111,6 +111,14 @@ public abstract class MTXItem<T> implements IRegistrable<T> {
         return false;
     }
 
+    public String abilityName(String name, String howToActivate) {
+        return ChatColor.GOLD + name + ChatColor.GOLD + ChatColor.BOLD + howToActivate;
+    }
+
+    public String getCooldownText() {
+        return ChatColor.GRAY + "Cooldown " + ChatColor.RED + cooldownTime + ChatColor.GRAY + " seconds.";
+    }
+
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         if (!event.hasItem() || !check(event.getItem())) return;
@@ -124,16 +132,12 @@ public abstract class MTXItem<T> implements IRegistrable<T> {
         }
     }
 
-
-
     @EventHandler
     public void onInteractEntity(PlayerInteractEntityEvent event) {
         if (!check(event.getPlayer().getInventory().getItem(event.getHand())))
             return;
         rightClickEntity(event.getPlayer(), event.getPlayer().getInventory().getItem(event.getHand()), event.getPlayer().isSneaking(), event);
     }
-
-
 
     @EventHandler
     public void onHurt(EntityDamageByEntityEvent event) {
@@ -146,9 +150,6 @@ public abstract class MTXItem<T> implements IRegistrable<T> {
             hurtEntity(player, player.getInventory().getItemInOffHand(), event.getEntity(), event);
         }
     }
-
-
-
     @EventHandler
     public void onBreakBlock(BlockBreakEvent event) {
         if (!check(event.getPlayer().getInventory().getItemInMainHand()))
