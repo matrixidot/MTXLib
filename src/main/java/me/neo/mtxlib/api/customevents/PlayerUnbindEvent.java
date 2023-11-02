@@ -1,21 +1,25 @@
 package me.neo.mtxlib.api.customevents;
 
-import me.neo.mtxlib.api.core.MTXRegistrable;
+import me.neo.mtxlib.api.core.IBindable;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-public class RegisterMTXRegistrableEvent extends Event implements Cancellable {
+@SuppressWarnings("unused")
+public class PlayerUnbindEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
 
     private boolean cancelled;
 
-    private final MTXRegistrable<?> registrable;
+    private final Player player;
+    private final IBindable<?> bindable;
 
-    public RegisterMTXRegistrableEvent(MTXRegistrable<?> registerable) {
+    public PlayerUnbindEvent(Player player, IBindable<?> bindable) {
         cancelled = false;
-        this.registrable = registerable;
+        this.player = player;
+        this.bindable = bindable;
     }
 
     @NotNull
@@ -29,11 +33,19 @@ public class RegisterMTXRegistrableEvent extends Event implements Cancellable {
     }
 
     /**
-     * Returns the {@link MTXRegistrable} being registered.
+     * Returns the {@link Player} being unbound.
+     * @return The Player
+     */
+    public Player getPlayer() {
+        return player;
+    }
+
+    /**
+     * Returns the {@link IBindable} being registered.
      * @return The twist being registered.
      */
-    public MTXRegistrable<?> getRegistrable() {
-        return registrable;
+    public IBindable<?> getBindable() {
+        return bindable;
     }
 
     /**

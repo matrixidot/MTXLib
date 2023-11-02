@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+@SuppressWarnings("unused")
 public class ItemStash {
     private static final HashMap<UUID, ItemStash> stashes = new HashMap<>();
     private final UUID owner;

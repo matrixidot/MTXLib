@@ -3,6 +3,7 @@ package me.neo.mtxlib;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
+@SuppressWarnings("unused")
 public class Log {
     private final boolean verbose;
     private final String prefix;

@@ -3,11 +3,12 @@ package me.neo.mtxlib.api.core;
 import org.bukkit.event.Listener;
 
 /**
- * Represents a class that can be registered to the MTXRegistry
- * Any class implementing this can also handle events
+ * Represents an object that can be registered to the MTXRegistry
+ * This also allows for event handling
  * @param <T> The Implementing class
  */
-public interface MTXRegistrable<T> extends Listener {
+@SuppressWarnings("unused")
+public interface IRegistrable<T> extends Listener {
     String getName();
 
     int getId();

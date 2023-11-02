@@ -7,6 +7,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class Cooldown {
     public static List<Cooldown> cooldowns = new ArrayList<>();
     private final Player player;

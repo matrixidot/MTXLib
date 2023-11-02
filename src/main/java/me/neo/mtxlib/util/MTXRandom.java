@@ -3,6 +3,7 @@ package me.neo.mtxlib.util;
 import java.util.List;
 import java.util.Random;
 
+@SuppressWarnings("unused")
 public class MTXRandom {
     private static final Random random = new Random();
 

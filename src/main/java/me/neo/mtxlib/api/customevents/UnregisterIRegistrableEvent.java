@@ -1,19 +1,20 @@
 package me.neo.mtxlib.api.customevents;
 
-import me.neo.mtxlib.api.core.MTXRegistrable;
+import me.neo.mtxlib.api.core.IRegistrable;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-public class UnregisterMTXRegistrableEvent extends Event implements Cancellable {
+@SuppressWarnings("unused")
+public class UnregisterIRegistrableEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
 
     private boolean cancelled;
 
-    private final MTXRegistrable<?> registrable;
+    private final IRegistrable<?> registrable;
 
-    public UnregisterMTXRegistrableEvent(MTXRegistrable<?> registrable) {
+    public UnregisterIRegistrableEvent(IRegistrable<?> registrable) {
         cancelled = false;
         this.registrable = registrable;
     }
@@ -29,10 +30,10 @@ public class UnregisterMTXRegistrableEvent extends Event implements Cancellable 
     }
 
     /**
-     * Returns the {@link MTXRegistrable} being registered.
+     * Returns the {@link IRegistrable} being registered.
      * @return The twist being unregistered.
      */
-    public MTXRegistrable<?> getRegistrable() {
+    public IRegistrable<?> getRegistrable() {
         return registrable;
     }
 

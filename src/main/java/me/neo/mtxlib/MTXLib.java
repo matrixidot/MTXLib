@@ -2,19 +2,14 @@ package me.neo.mtxlib;
 
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
-import org.bukkit.NamespacedKey;
+import me.neo.mtxlib.api.core.MTXRegistry;
 import org.bukkit.plugin.java.JavaPlugin;
 
+@SuppressWarnings("unused")
 public class MTXLib {
     /* LIB FIELDS */
     private static JavaPlugin parentPlugin;
     public static Log log;
-
-    /* TWIST API FIELDS */
-    private static NamespacedKey twistInternalKey;
-
-    /* ITEM API FIELDS */
-    private static NamespacedKey mtxItemInternalKey;
 
     /**
      * Call this method in your plugin's onLoad method.
@@ -25,13 +20,13 @@ public class MTXLib {
      */
     public static <T extends JavaPlugin> void onLoad(T plugin, boolean logDebug) {
         parentPlugin = plugin;
-        twistInternalKey = new NamespacedKey(plugin, "MTXLib.TwistAPI.ItemTwist.Internal.Identifier");
-        mtxItemInternalKey = new NamespacedKey(plugin, "MTXLib.ItemAPI.MTXItem.Internal.Identifier");
         CommandAPI.onLoad(new CommandAPIBukkitConfig(plugin).verboseOutput(true));
         log = new Log("[MTXLib]: ", logDebug);
     }
 
     public static <T extends JavaPlugin> void onEnable(T plugin) {
+        for (String s : MTXRegistry.registeredNames)
+            MTXLib.log.success("Registered: " + s);
     }
 
     public static void onDisable() {
@@ -44,17 +39,4 @@ public class MTXLib {
     public static JavaPlugin getPlugin() {
         return parentPlugin;
     }
-    public static String getTwistInternalString() {
-        return "MTXLib.TwistAPI.ItemTwist.Internal.Identifier";
-    }
-    public static NamespacedKey getTwistInternalKey() {
-        return twistInternalKey;
-    }
-    public static String getItemInternalString() {
-        return "MTXLib.ItemAPI.MTXItem.Internal.Identifier";
-    }
-    public static NamespacedKey getMtxItemInternalKey() {
-        return mtxItemInternalKey;
-    }
-
 }
