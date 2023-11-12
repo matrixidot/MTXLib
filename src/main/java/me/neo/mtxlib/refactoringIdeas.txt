@@ -1,6 +1,0 @@
-Make an IRegisterable interface and have a universal class for registering any IRegisterable thing.
-Then we can have a universal Register and Unregister event that returns an IRegisterable. These can also be user defined.
-
-
-How to store registered things. List in Registering class maybe?
-- Of type Registerable then conform the type using the get method

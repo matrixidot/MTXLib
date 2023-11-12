@@ -140,14 +140,14 @@ public abstract class MTXItem<T> implements IRegistrable<T> {
     }
 
     @EventHandler
-    public void onHurt(EntityDamageByEntityEvent event) {
+    public void onDealDamage(EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player player))
             return;
         if (check(player.getInventory().getItemInMainHand())) {
-            hurtEntity(player, player.getInventory().getItemInMainHand(), event.getEntity(), event);
+            dealtDamage(player, player.getInventory().getItemInMainHand(), event.getEntity(), event);
         }
         if (check(player.getInventory().getItemInOffHand())) {
-            hurtEntity(player, player.getInventory().getItemInOffHand(), event.getEntity(), event);
+            dealtDamage(player, player.getInventory().getItemInOffHand(), event.getEntity(), event);
         }
     }
     @EventHandler
@@ -166,6 +166,7 @@ public abstract class MTXItem<T> implements IRegistrable<T> {
      * @param event the {@link org.bukkit.event.player.PlayerInteractEvent} being fired,
      */
     public abstract void rightClick(Player player, ItemStack item, boolean sneaking, PlayerInteractEvent event);
+
     /**
      * Fired when the player left clicks with the item.
      * Note this method is fired even if canUse() is false. It is up to you to determine the effects.
@@ -175,6 +176,7 @@ public abstract class MTXItem<T> implements IRegistrable<T> {
      * @param event the {@link org.bukkit.event.player.PlayerInteractEvent} being fired,
      */
     public abstract void leftClick(Player player, ItemStack item, boolean sneaking, PlayerInteractEvent event);
+
     /**
      * Fired when the player right-clicks a block with the item.
      * Note this method is fired even if canUse() is false. It is up to you to determine the effects.
@@ -185,6 +187,7 @@ public abstract class MTXItem<T> implements IRegistrable<T> {
      * @param event the {@link org.bukkit.event.player.PlayerInteractEvent} being fired,
      */
     public abstract void rightClickBlock(Player player, ItemStack item, Block clickedBlock, boolean sneaking, PlayerInteractEvent event);
+
     /**
      * Fired when the player left-clicks a block with the item.
      * Note this method is fired even if canUse() is false. It is up to you to determine the effects.
@@ -198,13 +201,14 @@ public abstract class MTXItem<T> implements IRegistrable<T> {
 
     /**
      * Fired when the player hurts an entity with the item equipped in their main or offhand.
+     * Note this method can be called twice if the player has the item in the main and offhand.
      * Note this method is fired even if canUse() is false. It is up to you to determine the effects.
      * @param player the {@link org.bukkit.entity.Player} using the item.
      * @param item the {@link org.bukkit.inventory.ItemStack} that is the custom item.
      * @param entity the {@link org.bukkit.entity.Entity} that was hurt.
      * @param event the {@link org.bukkit.event.entity.EntityDamageByEntityEvent} being fired.
      */
-    public abstract void hurtEntity(Player player, ItemStack item, Entity entity, EntityDamageByEntityEvent event);
+    public abstract void dealtDamage(Player player, ItemStack item, Entity entity, EntityDamageByEntityEvent event);
 
     /**
      * Fired when the player right-clicks on an entity with the item.

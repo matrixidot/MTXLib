@@ -2,7 +2,9 @@ package me.neo.mtxlib;
 
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
+import me.neo.mtxlib.api.commands.MTXCommand;
 import me.neo.mtxlib.api.core.MTXRegistry;
+import me.neo.mtxlib.util.Log;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @SuppressWarnings("unused")
@@ -21,6 +23,7 @@ public class MTXLib {
     public static <T extends JavaPlugin> void onLoad(T plugin, boolean logDebug) {
         parentPlugin = plugin;
         CommandAPI.onLoad(new CommandAPIBukkitConfig(plugin).verboseOutput(true));
+        new MTXCommand(plugin);
         log = new Log("[MTXLib]: ", logDebug);
     }
 

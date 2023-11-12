@@ -3,6 +3,7 @@ package me.neo.mtxlib.api.core;
 import me.neo.mtxlib.MTXLib;
 import me.neo.mtxlib.api.customevents.RegisterIRegstrableEvent;
 import me.neo.mtxlib.api.customevents.UnregisterIRegistrableEvent;
+import me.neo.mtxlib.api.item.MTXItem;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,6 +22,9 @@ public class MTXRegistry {
 
     public static ArrayList<IRegistrable<?>> registered = new ArrayList<>();
     public static ArrayList<String> registeredNames = new ArrayList<>();
+    public static ArrayList<String> bindableNames = new ArrayList<>();
+    public static ArrayList<String> itemNames = new ArrayList<>();
+
 
     @Nullable
     public static <T extends IRegistrable<?>> IRegistrable<?> get(Class<T> clazz) {
@@ -34,7 +38,7 @@ public class MTXRegistry {
     @Nullable
     public static IRegistrable<?> get(String name) {
         for (IRegistrable<?> r : registered) {
-            if (r.getName().toLowerCase().equals(name))
+            if (r.getName().equals(name))
                 return r;
         }
         return null;
@@ -65,6 +69,10 @@ public class MTXRegistry {
 
         registered.add(r);
         registeredNames.add(r.getName());
+        if (r instanceof IBindable<?>)
+            bindableNames.add(r.getName());
+        if (r instanceof MTXItem)
+            itemNames.add(r.getName());
         r.onRegister();
         Bukkit.getPluginManager().registerEvents(r, plugin);
         MTXLib.log.success(r.getName() + " registered.");
@@ -87,6 +95,10 @@ public class MTXRegistry {
 
         registered.remove(r);
         registeredNames.remove(r.getName());
+        if (r instanceof IBindable<?>)
+            bindableNames.remove(r.getName());
+        if (r instanceof MTXItem)
+            itemNames.remove(r.getName());
         r.onUnregister();
         MTXLib.log.success(r.getName() + "unregistered.");
         return true;

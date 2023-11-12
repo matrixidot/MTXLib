@@ -28,7 +28,7 @@ public abstract class ItemTwist<T> extends Twist<T> {
         this.grantItemOnBind = grantItemOnBind;
         this.soulbound = soulbound;
         this.customItem = item;
-        this.customRecipe = item.getRecipe();
+        this.customRecipe = item.getRecipe() != null ? item.getRecipe() : buildCustomRecipe(item.getItem());
     }
 
     public boolean isItemGrantedOnBind() {
@@ -47,8 +47,12 @@ public abstract class ItemTwist<T> extends Twist<T> {
         return customRecipe;
     }
 
+    public abstract Recipe buildCustomRecipe(ItemStack customItem);
+
     @EventHandler
     public void onCraft(CraftItemEvent event) {
+        if (customRecipe == null)
+            return;
         if (!customItem.check(event.getRecipe().getResult()))
             return;
         Player player = (Player) event.getWhoClicked();

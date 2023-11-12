@@ -1,7 +1,9 @@
 package me.neo.mtxlib.api.twist;
 
+import me.neo.mtxlib.MTXLib;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -52,7 +54,16 @@ public class ItemStash {
             items.remove(stack);
     }
 
-    public void tryClaim(Player player) {
+    public void tryClaim() {
+        if (owner == null) {
+            MTXLib.log.error("Owner is null while trying to claim stash.");
+            return;
+        }
+        Player player = Bukkit.getPlayer(owner);
+        if (player == null) {
+            MTXLib.log.error("Player is null while trying to claim stash for: " + owner);
+            return;
+        }
         if (items.isEmpty()) {
             player.sendMessage(ChatColor.GREEN + "You have no items in your stash!");
             return;
@@ -86,14 +97,14 @@ public class ItemStash {
 
     public static void doAddStashText(Player player) {
         player.sendMessage(ChatColor.GREEN + "Your inventory is full so the item was added to your stash!");
-        player.sendMessage(ChatColor.GREEN + "You have " + ChatColor.RED + ItemStash.get(player.getUniqueId()).getItems().size() + " in your stash!");
+        player.sendMessage(ChatColor.GREEN + "You have " + ChatColor.RED + ItemStash.get(player.getUniqueId()).getItems().size() + " item(s) in your stash!");
 
         TextComponent filler = new TextComponent("§eClick ");
 
         TextComponent clickable = new TextComponent("§6§lHERE");
-        clickable.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ct"));
+        clickable.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mtx stash claim"));
 
-        TextComponent filler1 = new TextComponent(" §eto claim the items, or run /ct.");
+        TextComponent filler1 = new TextComponent(" §eto try to claim the item(s), or run /mtx stash claim.");
 
         player.spigot().sendMessage(filler, clickable, filler1);
     }
@@ -101,14 +112,14 @@ public class ItemStash {
 
     public static void doRemoveStashText(Player player, int itemsClaimed) {
         player.sendMessage(ChatColor.RED + "Your inventory was full, but you claimed " + ChatColor.RED + itemsClaimed + " items!");
-        player.sendMessage(ChatColor.YELLOW + "You still have " + ChatColor.RED + ItemStash.get(player.getUniqueId()).getItems().size() + " items left!");
+        player.sendMessage(ChatColor.YELLOW + "You still have " + ChatColor.RED + ItemStash.get(player.getUniqueId()).getItems().size() + " item(s) left!");
 
         TextComponent filler = new TextComponent("§eClick ");
 
         TextComponent clickable = new TextComponent("§6§lHERE");
-        clickable.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ct"));
+        clickable.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mtx stash claim"));
 
-        TextComponent filler1 = new TextComponent(" §eto claim the items, or run /ct.");
+        TextComponent filler1 = new TextComponent(" §eto try claim the item(s) again, or run /mtx stash claim.");
 
         player.spigot().sendMessage(filler, clickable, filler1);
     }

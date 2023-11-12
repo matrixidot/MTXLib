@@ -24,7 +24,6 @@ public class MTXBinder {
             MTXLib.log.warn("Bindable is null when trying to bind.");
             return false;
         }
-
         if (b.isBound(player)) {
             MTXLib.log.info(player.getName() + " is already bound to: " + b.getName());
             return false;

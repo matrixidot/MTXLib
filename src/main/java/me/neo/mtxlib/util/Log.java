@@ -1,4 +1,4 @@
-package me.neo.mtxlib;
+package me.neo.mtxlib.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
