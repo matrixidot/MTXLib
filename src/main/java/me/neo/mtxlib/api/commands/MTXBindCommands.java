@@ -16,8 +16,9 @@ public class MTXBindCommands {
 
     protected MTXBindCommands() {
         bindArgs.add(new PlayerArgument("player")); // 0
-        bindArgs.add(new GreedyStringArgument("name").replaceSuggestions(ArgumentSuggestions.strings(MTXRegistry.bindableNames))); // 1
-        bindArgs.add(new BooleanArgument("silent")); // 2
+        bindArgs.add(new BooleanArgument("silent")); // 1
+        bindArgs.add(new GreedyStringArgument("name").replaceSuggestions(ArgumentSuggestions.strings(MTXRegistry.bindableNames))); // 2
+
 
     }
 
@@ -31,12 +32,12 @@ public class MTXBindCommands {
                         sender.sendMessage(ChatColor.DARK_RED + "Error: Player not found.");
                         return;
                     }
-                    String name = (String) args.get(1);
+                    String name = (String) args.get(2);
                     IBindable<?> bindable = (IBindable<?>) MTXRegistry.get(name);
                     if (bindable == null) {
                         sender.sendMessage(ChatColor.DARK_RED + "Error: " + name + " is not bindable.");
                     } else {
-                        boolean success = MTXBinder.tryBind(player, bindable, Boolean.TRUE.equals(args.get(2)));
+                        boolean success = MTXBinder.tryBind(player, bindable, Boolean.TRUE.equals(args.get(1)));
                         if (!success) {
                             sender.sendMessage(ChatColor.DARK_RED + "Internal error occurred when trying to bind you to: " + name);
                             sender.sendMessage(ChatColor.DARK_RED + "Please contact man_in_matrix#4484 on discord with a picture of your server's console");
@@ -50,7 +51,7 @@ public class MTXBindCommands {
 
     protected CommandAPICommand unbind() {
         return new CommandAPICommand("unbind")
-                .withArguments(bindArgs.get(0), bindArgs.get(1))
+                .withArguments(bindArgs.get(0), bindArgs.get(2))
                 .withPermission(CommandPermission.OP)
                 .executesPlayer((sender, args) -> {
                     Player player = (Player) args.get(0);

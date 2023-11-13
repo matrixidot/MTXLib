@@ -17,17 +17,22 @@ public class MTXLib {
      * Call this method in your plugin's onLoad method.
      * Sets fields and sets up CommandAPI
      * @param plugin The {@link org.bukkit.plugin.java.JavaPlugin} that is using the library.
-     * @param logDebug Whether to log debug statements. Also sets CommandAPI's output to verbose
      * @param <T> The {@link org.bukkit.plugin.java.JavaPlugin}.
      */
-    public static <T extends JavaPlugin> void onLoad(T plugin, boolean logDebug) {
+    public static <T extends JavaPlugin> void onLoad(T plugin) {
         parentPlugin = plugin;
         CommandAPI.onLoad(new CommandAPIBukkitConfig(plugin).verboseOutput(true));
-        new MTXCommand(plugin);
-        log = new Log("[MTXLib]: ", logDebug);
     }
 
-    public static <T extends JavaPlugin> void onEnable(T plugin) {
+    /**
+     * Call this method after registering everything
+     * @param plugin The parent plugin
+     * @param logDebug whether to log debug messages
+     * @param <T> The javaplugin parent.
+     */
+    public static <T extends JavaPlugin> void onEnable(T plugin, boolean logDebug) {
+        log = new Log("[MTXLib]: ", logDebug);
+        new MTXCommand(plugin);
         for (String s : MTXRegistry.registeredNames)
             MTXLib.log.success("Registered: " + s);
     }
