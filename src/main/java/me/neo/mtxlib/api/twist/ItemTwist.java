@@ -1,6 +1,7 @@
 package me.neo.mtxlib.api.twist;
 
 import me.neo.mtxlib.api.item.MTXItem;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -9,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
@@ -29,6 +31,8 @@ public abstract class ItemTwist<T> extends Twist<T> {
         this.soulbound = soulbound;
         this.customItem = item;
         this.customRecipe = item.getRecipe() != null ? item.getRecipe() : buildCustomRecipe(item.getItem());
+        if (item.getRecipe() == null && customRecipe != null)
+            Bukkit.addRecipe(customRecipe);
     }
 
     public boolean isItemGrantedOnBind() {
@@ -68,6 +72,18 @@ public abstract class ItemTwist<T> extends Twist<T> {
             event.getInventory().setResult(no);
             player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1f, 1f);
             event.setCancelled(true);
+        }
+    }
+
+    @Override
+    public void onBind(Player player) {
+        if (!grantItemOnBind)
+            return;
+        if (player.getInventory().firstEmpty() != -1) {
+            player.getInventory().addItem(customItem.getItem());
+        } else {
+            ItemStash.createStash(player.getUniqueId());
+            ItemStash.get(player.getUniqueId()).addItem(customItem.getItem());
         }
     }
 }

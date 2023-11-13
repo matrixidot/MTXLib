@@ -34,7 +34,7 @@ public interface IBindable<T> extends IRegistrable<T> {
 
     String[] bindMessage();
 
-    void onBind();
+    void onBind(Player player);
 
-    void onUnbind();
+    void onUnbind(Player player);
 }

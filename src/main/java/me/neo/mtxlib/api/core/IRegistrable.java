@@ -9,8 +9,16 @@ import org.bukkit.event.Listener;
  */
 @SuppressWarnings("unused")
 public interface IRegistrable<T> extends Listener {
+    /**
+     * MUST BE UNIQUE BETWEEN ANY AND ALL IMPLEMENTATIONS
+     * @return The name of the IRegistrable
+     */
     String getName();
 
+    /**
+     * MUST BE UNIQUE BETWEEN ANY AND ALL IMPLEMENTATIONS
+     * @return The id of the IRegistrable
+     */
     int getId();
 
     void onRegister();

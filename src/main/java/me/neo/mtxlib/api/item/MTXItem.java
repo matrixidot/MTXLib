@@ -6,6 +6,7 @@ import me.neo.mtxlib.util.Cooldown;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -46,6 +47,8 @@ public abstract class MTXItem<T> implements IRegistrable<T> {
         COOLDOWN_ID = "MTXLib.API.item.MTXItem.COOLDOWN" + name + id;
         item = configureItem();
         recipe = buildRecipe(item);
+        if (recipe != null)
+            Bukkit.addRecipe(recipe);
     }
 
     public String getName() {

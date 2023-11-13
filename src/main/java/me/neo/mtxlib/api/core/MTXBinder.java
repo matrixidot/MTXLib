@@ -43,7 +43,7 @@ public class MTXBinder {
                 player.sendMessage(s);
         }
         b.bind(player);
-        b.onBind();
+        b.onBind(player);
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 4f);
         return true;
     }
@@ -61,7 +61,7 @@ public class MTXBinder {
         if (unregistered) {
             MTXLib.log.info(player.getName() + " unbound from: " + b.getName() + " because it was unregistered");
             player.sendMessage(ChatColor.RED + "You were unbound from: " + b.getName() + " because it was unregistered.");
-            b.onUnbind();
+            b.onUnbind(player);
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 0.5f);
             return true;
         }
@@ -79,7 +79,7 @@ public class MTXBinder {
             return false;
         }
         b.unbind(player);
-        b.onUnbind();
+        b.onUnbind(player);
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 0.5f);
         return true;
     }

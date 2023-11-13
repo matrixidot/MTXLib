@@ -37,8 +37,11 @@ public class ItemStash {
     }
 
     public void addItem(ItemStack toAdd) {
-        if (!items.contains(toAdd))
+        if (!items.contains(toAdd)) {
             items.add(toAdd);
+            doAddStashText(Bukkit.getPlayer(owner));
+        }
+
     }
 
     public void removeItem(int index) {
