@@ -20,6 +20,7 @@ public class MTXLib {
      * @param <T> The {@link org.bukkit.plugin.java.JavaPlugin}.
      */
     public static <T extends JavaPlugin> void onLoad(T plugin) {
+        log = new Log("[MTXLib]: ", true);
         parentPlugin = plugin;
         CommandAPI.onLoad(new CommandAPIBukkitConfig(plugin).verboseOutput(true));
     }
