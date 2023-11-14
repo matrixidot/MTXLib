@@ -7,9 +7,9 @@ import dev.jorel.commandapi.arguments.GreedyStringArgument;
 import dev.jorel.commandapi.arguments.PlayerArgument;
 import me.neo.mtxlib.api.core.MTXRegistry;
 import me.neo.mtxlib.api.item.MTXItem;
+import me.neo.mtxlib.api.twist.ItemStash;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class MTXItemCommands {
 
@@ -35,7 +35,11 @@ public class MTXItemCommands {
                     if (item == null) {
                         sender.sendMessage(ChatColor.DARK_RED + "Error: " + itemName + " is not a valid item name");
                     } else {
-                        player.getInventory().addItem(item.getItem());
+                        if (player.getInventory().firstEmpty() == -1) {
+                            ItemStash.get(player.getUniqueId()).addItem(item.getItem());
+                        } else {
+                            player.getInventory().addItem(item.getItem());
+                        }
                         sender.sendMessage(ChatColor.GREEN + "Successfully gave " + player.getName() + " " + itemName + ".");
                     }
                 });

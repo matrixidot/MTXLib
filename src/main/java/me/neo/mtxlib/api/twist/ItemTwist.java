@@ -82,7 +82,6 @@ public abstract class ItemTwist<T> extends Twist<T> {
         if (player.getInventory().firstEmpty() != -1) {
             player.getInventory().addItem(customItem.getItem());
         } else {
-            ItemStash.createStash(player.getUniqueId());
             ItemStash.get(player.getUniqueId()).addItem(customItem.getItem());
         }
     }

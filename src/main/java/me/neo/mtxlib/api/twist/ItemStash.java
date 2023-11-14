@@ -9,7 +9,6 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -20,17 +19,22 @@ public class ItemStash {
     private final UUID owner;
     private final ArrayList<ItemStack> items;
 
-    @Nullable
+
+    /**
+     * Gets the ItemStash for a player
+     * If it does not exist it will create one and return it.
+     * @param owner The Owner of the stash
+     * @return The Owner's existing ItemStash or a new one if one was created.
+     */
     public static ItemStash get(UUID owner) {
-        return stashes.get(owner);
+        if (stashes.get(owner) != null) {
+            return stashes.get(owner);
+        }
+        ItemStash stash = new ItemStash(owner);
+        stashes.put(owner, stash);
+        return stash;
     }
 
-    public static void createStash(UUID owner) {
-        if (ItemStash.get(owner) == null) {
-            ItemStash stash = new ItemStash(owner);
-            stashes.put(owner, stash);
-        }
-    }
     private ItemStash(UUID owner) {
         this.owner = owner;
         this.items = new ArrayList<>();
