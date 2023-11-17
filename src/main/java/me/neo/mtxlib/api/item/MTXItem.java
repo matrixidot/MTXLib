@@ -115,11 +115,11 @@ public abstract class MTXItem<T> implements IRegistrable<T> {
     }
 
     public String abilityName(String name, String howToActivate) {
-        return ChatColor.GOLD + name + ChatColor.GOLD + ChatColor.BOLD + howToActivate;
+        return ChatColor.GOLD + "Item Ability: " + name + " " + ChatColor.YELLOW + ChatColor.BOLD + howToActivate;
     }
 
     public String getCooldownText() {
-        return ChatColor.GRAY + "Cooldown " + ChatColor.RED + cooldownTime + ChatColor.GRAY + " seconds.";
+        return ChatColor.GRAY + "Cooldown: " + ChatColor.RED + cooldownTime + ChatColor.GRAY + "s";
     }
 
     @EventHandler

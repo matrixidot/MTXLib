@@ -10,6 +10,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 @SuppressWarnings("all")
@@ -143,6 +144,21 @@ public class Raycast {
 
     public Raycast setWhitelistedMats(ArrayList<Material> whitelistedMats) {
         this.whitelistedMats = whitelistedMats;
+        return this;
+    }
+
+    public Raycast addWhitelistedMat(Material mat) {
+        whitelistedMats.add(mat);
+        return this;
+    }
+
+    public Raycast addWhitelistedMats(Material... mats) {
+        whitelistedMats.addAll(Arrays.asList(mats));
+        return this;
+    }
+
+    public Raycast addWhitelistedMats(Collection<Material> mats) {
+        whitelistedMats.addAll(mats);
         return this;
     }
 
