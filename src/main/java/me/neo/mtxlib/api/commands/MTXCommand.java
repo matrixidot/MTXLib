@@ -23,6 +23,7 @@ public class MTXCommand {
                 .withSubcommand(bindCommands.unbind())
                 .withSubcommand(itemCommands.item())
                 .withSubcommand(stashCommands.stash())
+                //.withSubcommand(registryCommands.get())
                 .register();
     }
 }
