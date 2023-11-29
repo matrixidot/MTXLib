@@ -9,6 +9,8 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -26,12 +28,18 @@ public class ItemStash {
      * @param owner The Owner of the stash
      * @return The Owner's existing ItemStash or a new one if one was created.
      */
+    @Nullable
     public static ItemStash get(UUID owner) {
+        if (owner == null) {
+            MTXLib.log.warn("Tried to create an Item Stash for null.");
+            return null;
+        }
         if (stashes.get(owner) != null) {
             return stashes.get(owner);
         }
         ItemStash stash = new ItemStash(owner);
         stashes.put(owner, stash);
+        MTXLib.log.info("Created Item Stash for " + Bukkit.getPlayer(owner).getName() + ".");
         return stash;
     }
 
@@ -98,6 +106,7 @@ public class ItemStash {
         return owner;
     }
 
+    @Nonnull
     public ArrayList<ItemStack> getItems() {
         return items;
     }
@@ -109,7 +118,7 @@ public class ItemStash {
         TextComponent filler = new TextComponent("§eClick ");
 
         TextComponent clickable = new TextComponent("§6§lHERE");
-        clickable.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mtx stash claim"));
+        clickable.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "mtx stash claim"));
 
         TextComponent filler1 = new TextComponent(" §eto try to claim the item(s), or run /mtx stash claim.");
 
@@ -124,7 +133,7 @@ public class ItemStash {
         TextComponent filler = new TextComponent("§eClick ");
 
         TextComponent clickable = new TextComponent("§6§lHERE");
-        clickable.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mtx stash claim"));
+        clickable.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "mtx stash claim"));
 
         TextComponent filler1 = new TextComponent(" §eto try claim the item(s) again, or run /mtx stash claim.");
 
