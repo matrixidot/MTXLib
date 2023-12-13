@@ -1,6 +1,7 @@
 package me.neo.mtxlib.api.item;
 
 import me.neo.mtxlib.MTXLib;
+import me.neo.mtxlib.api.core.IEventRegistrable;
 import me.neo.mtxlib.api.core.IRegistrable;
 import me.neo.mtxlib.util.Cooldown;
 import net.md_5.bungee.api.ChatColor;
@@ -26,7 +27,7 @@ import java.time.Duration;
 import java.util.Objects;
 
 @SuppressWarnings("unused")
-public abstract class MTXItem<T> implements IRegistrable<T> {
+public abstract class MTXItem<T> implements IEventRegistrable<T> {
     private final String name;
     private final int id;
     private final int cooldownTime;

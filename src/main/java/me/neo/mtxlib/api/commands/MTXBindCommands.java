@@ -5,7 +5,7 @@ import dev.jorel.commandapi.CommandPermission;
 import dev.jorel.commandapi.arguments.*;
 import me.neo.mtxlib.api.core.IBindable;
 import me.neo.mtxlib.api.core.MTXBinder;
-import me.neo.mtxlib.api.core.MTXRegistry;
+import me.neo.mtxlib.api.core.MTXRegistries;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -16,7 +16,7 @@ public class MTXBindCommands {
 
     protected MTXBindCommands() {
         bindArgs.add(new PlayerArgument("player")); // 0
-        bindArgs.add(new GreedyStringArgument("name").replaceSuggestions(ArgumentSuggestions.strings(MTXRegistry.bindableNames))); // 1
+        bindArgs.add(new GreedyStringArgument("name").replaceSuggestions(ArgumentSuggestions.strings(MTXRegistries.bindableNames))); // 1
 
 
     }
@@ -32,7 +32,7 @@ public class MTXBindCommands {
                         return;
                     }
                     String name = (String) args.get(1);
-                    IBindable<?> bindable = (IBindable<?>) MTXRegistry.get(name);
+                    IBindable<?> bindable = (IBindable<?>) MTXRegistries.get(name);
                     if (bindable == null) {
                         sender.sendMessage(ChatColor.DARK_RED + "Error: " + name + " is not bindable.");
                     } else {
@@ -59,7 +59,7 @@ public class MTXBindCommands {
                         return;
                     }
                     String name = (String) args.get(1);
-                    IBindable<?> bindable = (IBindable<?>) MTXRegistry.get(name);
+                    IBindable<?> bindable = (IBindable<?>) MTXRegistries.get(name);
                     if (bindable == null) {
                         sender.sendMessage(ChatColor.DARK_RED + "Error: " + name + " is not bindable.");
                     } else {

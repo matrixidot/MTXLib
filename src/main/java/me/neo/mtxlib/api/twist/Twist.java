@@ -1,9 +1,9 @@
 package me.neo.mtxlib.api.twist;
 
-import me.neo.mtxlib.api.core.IBindable;
+import me.neo.mtxlib.api.core.IEventBindable;
 
 @SuppressWarnings("unused")
-public abstract class Twist<T> implements IBindable<T> {
+public abstract class Twist<T> implements IEventBindable<T> {
     private final String name;
     private final String description;
 

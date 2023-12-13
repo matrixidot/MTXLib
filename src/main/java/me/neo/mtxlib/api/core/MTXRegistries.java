@@ -5,6 +5,7 @@ import me.neo.mtxlib.api.customevents.RegisterIRegstrableEvent;
 import me.neo.mtxlib.api.customevents.UnregisterIRegistrableEvent;
 import me.neo.mtxlib.api.item.MTXItem;
 import org.bukkit.Bukkit;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nullable;
@@ -17,8 +18,8 @@ import java.util.ArrayList;
  * You can define your own class to register using the {@link IRegistrable} Interface.
  */
 @SuppressWarnings("unused")
-public class MTXRegistry {
-    private MTXRegistry() {}
+public class MTXRegistries {
+    private MTXRegistries() {}
 
     public static ArrayList<IRegistrable<?>> registered = new ArrayList<>();
     public static ArrayList<String> registeredNames = new ArrayList<>();
@@ -74,7 +75,8 @@ public class MTXRegistry {
         if (r instanceof MTXItem)
             itemNames.add(r.getName());
         r.onRegister();
-        Bukkit.getPluginManager().registerEvents(r, plugin);
+        if (r instanceof Listener l)
+            Bukkit.getPluginManager().registerEvents(l, plugin);
         MTXLib.log.success(r.getName() + " registered.");
         return true;
     }

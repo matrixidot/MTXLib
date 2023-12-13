@@ -3,7 +3,7 @@ package me.neo.mtxlib;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import me.neo.mtxlib.api.commands.MTXCommand;
-import me.neo.mtxlib.api.core.MTXRegistry;
+import me.neo.mtxlib.api.core.MTXRegistries;
 import me.neo.mtxlib.util.Log;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -34,7 +34,8 @@ public class MTXLib {
     public static <T extends JavaPlugin> void onEnable(T plugin, boolean logDebug) {
         log = new Log("[MTXLib]: ", logDebug);
         new MTXCommand(plugin);
-        for (String s : MTXRegistry.registeredNames)
+        MTXLib.register(plugin);
+        for (String s : MTXRegistries.registeredNames)
             MTXLib.log.success("Registered: " + s);
     }
 
