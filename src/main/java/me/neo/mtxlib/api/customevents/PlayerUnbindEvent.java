@@ -1,6 +1,6 @@
 package me.neo.mtxlib.api.customevents;
 
-import me.neo.mtxlib.api.core.IBindable;
+import me.neo.mtxlib.api.core.interfaces.IAttachable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -14,9 +14,9 @@ public class PlayerUnbindEvent extends Event implements Cancellable {
     private boolean cancelled;
 
     private final Player player;
-    private final IBindable<?> bindable;
+    private final IAttachable<?> bindable;
 
-    public PlayerUnbindEvent(Player player, IBindable<?> bindable) {
+    public PlayerUnbindEvent(Player player, IAttachable<?> bindable) {
         cancelled = false;
         this.player = player;
         this.bindable = bindable;
@@ -41,10 +41,10 @@ public class PlayerUnbindEvent extends Event implements Cancellable {
     }
 
     /**
-     * Returns the {@link IBindable} being registered.
+     * Returns the {@link IAttachable} being registered.
      * @return The twist being registered.
      */
-    public IBindable<?> getBindable() {
+    public IAttachable<?> getBindable() {
         return bindable;
     }
 

@@ -1,10 +1,9 @@
-package me.neo.mtxlib.api.core;
+package me.neo.mtxlib.api.core.interfaces;
 
-import org.bukkit.event.Listener;
+import me.neo.mtxlib.api.core.registering.MTXRegistries;
 
 /**
- * Represents an object that can be registered to the MTXRegistries
- * This also allows for event handling
+ * Represents an object that can be registered to the {@link MTXRegistries}
  * @param <T> The Implementing class
  */
 @SuppressWarnings("unused")

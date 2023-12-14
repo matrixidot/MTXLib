@@ -1,4 +1,4 @@
-package me.neo.mtxlib.api.core;
+package me.neo.mtxlib.api.core.interfaces;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -9,11 +9,11 @@ import java.util.UUID;
 
 /**
  * Represents an object that a player can be attached to.
- * Extends {@link IRegistrable} since a bindable object needs to be registered first.
+ * Extends {@link IRegistrable} since an attachable object needs to be registered first.
  * @param <T> The implementing class
  */
 @SuppressWarnings("unused")
-public interface IBindable<T> extends IRegistrable<T> {
+public interface IAttachable<T> extends IRegistrable<T> {
     List<UUID> boundPlayers = new ArrayList<>();
 
     default void bind(Player player) {

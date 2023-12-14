@@ -1,9 +1,9 @@
 package me.neo.mtxlib.api.twist;
 
-import me.neo.mtxlib.api.core.IEventBindable;
+import me.neo.mtxlib.api.core.interfaces.IEAttachable;
 
 @SuppressWarnings("unused")
-public abstract class Twist<T> implements IEventBindable<T> {
+public abstract class Twist<T> implements IEAttachable<T> {
     private final String name;
     private final String description;
 

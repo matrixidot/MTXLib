@@ -1,9 +1,11 @@
 package me.neo.mtxlib;
 
+import com.google.errorprone.annotations.ForOverride;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import me.neo.mtxlib.api.commands.MTXCommand;
-import me.neo.mtxlib.api.core.MTXRegistries;
+import me.neo.mtxlib.api.core.registering.MRegistry;
+import me.neo.mtxlib.api.core.registering.MTXRegistries;
 import me.neo.mtxlib.util.Log;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -26,7 +28,7 @@ public class MTXLib {
     }
 
     /**
-     * Call this method after registering everything
+     * This method initia
      * @param plugin The parent plugin
      * @param logDebug whether to log debug messages
      * @param <T> The javaplugin parent.
@@ -34,9 +36,7 @@ public class MTXLib {
     public static <T extends JavaPlugin> void onEnable(T plugin, boolean logDebug) {
         log = new Log("[MTXLib]: ", logDebug);
         new MTXCommand(plugin);
-        MTXLib.register(plugin);
-        for (String s : MTXRegistries.registeredNames)
-            MTXLib.log.success("Registered: " + s);
+        MTXRegistries.register();
     }
 
     public static void onDisable() {

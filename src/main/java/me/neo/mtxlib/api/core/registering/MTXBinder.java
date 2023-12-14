@@ -1,6 +1,7 @@
-package me.neo.mtxlib.api.core;
+package me.neo.mtxlib.api.core.registering;
 
 import me.neo.mtxlib.MTXLib;
+import me.neo.mtxlib.api.core.interfaces.IAttachable;
 import me.neo.mtxlib.api.customevents.PlayerBindEvent;
 import me.neo.mtxlib.api.customevents.PlayerUnbindEvent;
 import org.bukkit.Bukkit;
@@ -15,7 +16,7 @@ import org.bukkit.entity.Player;
 public class MTXBinder {
     private MTXBinder() {}
 
-    public static boolean tryBind(Player player, IBindable<?> b, boolean silent) {
+    public static boolean tryBind(Player player, IAttachable<?> b, boolean silent) {
         if (player == null) {
             MTXLib.log.warn("Player is null when trying to bind.");
             return false;
@@ -48,7 +49,7 @@ public class MTXBinder {
         return true;
     }
 
-    public static boolean tryUnbind(Player player, IBindable<?> b, boolean unregistered) {
+    public static boolean tryUnbind(Player player, IAttachable<?> b, boolean unregistered) {
         if (player == null) {
             MTXLib.log.warn("Player is null when unbinding.");
             return false;
