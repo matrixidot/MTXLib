@@ -6,7 +6,6 @@ import me.neo.mtxlib.api.core.interfaces.IEAttachable;
 public abstract class Twist<T> implements IEAttachable<T> {
     private final String name;
     private final String description;
-
     private final int id;
 
     public Twist(String name, String description, int id) {

@@ -5,7 +5,7 @@ import dev.jorel.commandapi.CommandPermission;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.GreedyStringArgument;
 import dev.jorel.commandapi.arguments.PlayerArgument;
-import me.neo.mtxlib.api.core.registering.MTXRegistries;
+import me.neo.mtxlib.api.core.registering.MTXRegisters;
 import me.neo.mtxlib.api.item.MTXItem;
 import me.neo.mtxlib.api.twist.ItemStash;
 import org.bukkit.ChatColor;
@@ -22,7 +22,7 @@ public class MTXItemCommands {
 
     protected CommandAPICommand give() {
         return new CommandAPICommand("give")
-                .withArguments(new PlayerArgument("player"), new GreedyStringArgument("item name").replaceSuggestions(ArgumentSuggestions.strings(MTXRegistries.getItems().getNames())))
+                .withArguments(new PlayerArgument("player"), new GreedyStringArgument("item name").replaceSuggestions(ArgumentSuggestions.strings(MTXRegisters.getItems().getNames())))
                 .withPermission(CommandPermission.OP)
                 .executesPlayer((sender, args) -> {
                     Player player = (Player) args.get(0);
@@ -31,7 +31,7 @@ public class MTXItemCommands {
                         return;
                     }
                     String itemName = (String) args.get(1);
-                    MTXItem<?> item = (MTXItem<?>) MTXRegistries.getItems().get(itemName);
+                    MTXItem<?> item = (MTXItem<?>) MTXRegisters.getItems().get(itemName);
                     if (item == null) {
                         sender.sendMessage(ChatColor.DARK_RED + "Error: " + itemName + " is not a valid item name");
                     } else {

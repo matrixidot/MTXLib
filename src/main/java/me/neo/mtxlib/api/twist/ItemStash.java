@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -18,6 +19,7 @@ import java.util.UUID;
 @SuppressWarnings("unused")
 public class ItemStash {
     private static final HashMap<UUID, ItemStash> stashes = new HashMap<>();
+    @Nonnull
     private final UUID owner;
     private final ArrayList<ItemStack> items;
 
@@ -31,10 +33,10 @@ public class ItemStash {
     @Nullable
     public static ItemStash get(UUID owner) {
         if (owner == null) {
-            MTXLib.log.warn("Tried to create an Item Stash for null.");
+            MTXLib.log.warn("Tried to get or create an Item Stash for null.");
             return null;
         }
-        if (stashes.get(owner) != null) {
+        if (stashes.containsKey(owner)) {
             return stashes.get(owner);
         }
         ItemStash stash = new ItemStash(owner);

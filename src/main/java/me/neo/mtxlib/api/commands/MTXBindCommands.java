@@ -5,7 +5,7 @@ import dev.jorel.commandapi.CommandPermission;
 import dev.jorel.commandapi.arguments.*;
 import me.neo.mtxlib.api.core.interfaces.IAttachable;
 import me.neo.mtxlib.api.core.registering.MTXBinder;
-import me.neo.mtxlib.api.core.registering.MTXRegistries;
+import me.neo.mtxlib.api.core.registering.MTXRegisters;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -16,7 +16,7 @@ public class MTXBindCommands {
 
     protected MTXBindCommands() {
         attachArgs.add(new PlayerArgument("player")); // 0
-        attachArgs.add(new GreedyStringArgument("name").replaceSuggestions(ArgumentSuggestions.strings(MTXRegistries.getAttachables().getNames()))); // 1
+        attachArgs.add(new GreedyStringArgument("name").replaceSuggestions(ArgumentSuggestions.strings(MTXRegisters.getAttachables().getNames()))); // 1
 
 
     }
@@ -32,7 +32,7 @@ public class MTXBindCommands {
                         return;
                     }
                     String name = (String) args.get(1);
-                    IAttachable<?> attachable = (IAttachable<?>) MTXRegistries.getAttachables().get(name);
+                    IAttachable<?> attachable = (IAttachable<?>) MTXRegisters.getAttachables().get(name);
                     if (attachable == null) {
                         sender.sendMessage(ChatColor.DARK_RED + "Error: " + name + " is not attachable.");
                     } else {
@@ -59,7 +59,7 @@ public class MTXBindCommands {
                         return;
                     }
                     String name = (String) args.get(1);
-                    IAttachable<?> detachable = (IAttachable<?>) MTXRegistries.getAttachables().get(name);
+                    IAttachable<?> detachable = (IAttachable<?>) MTXRegisters.getAttachables().get(name);
                     if (detachable == null) {
                         sender.sendMessage(ChatColor.DARK_RED + "Error: " + name + " is not detachable.");
                     } else {

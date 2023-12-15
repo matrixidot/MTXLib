@@ -13,24 +13,24 @@ import org.bukkit.plugin.Plugin;
  * You can define your own class to register using the {@link IRegistrable} Interface.
  */
 @SuppressWarnings("unused")
-public class MTXRegistries {
-    private MTXRegistries() {}
+public class MTXRegisters {
+    private MTXRegisters() {}
 
     private static final MRegistry<Twist<?>> TWISTS = MRegistry.create("TWISTS");
     private static final MRegistry<MTXItem<?>> ITEMS = MRegistry.create("ITEMS");
     private static final MRegistry<IAttachable<?>> ATTACHABLES = MRegistry.create("ATTACHABLES");
 
-    public static <T extends Twist<?>> IRegistrable<T> registerTwist(String name, Twist<T> twist, Plugin plugin) {
-        registerBindable(name, twist, plugin);
-        return TWISTS.registerItem(name, twist, plugin);
+    public static <T extends Twist<?>> IRegistrable<T> registerTwist(Twist<T> twist, Plugin plugin) {
+        registerBindable(twist, plugin);
+        return TWISTS.registerItem( twist, plugin);
     }
 
-    public static <T extends MTXItem<?>> IRegistrable<T> registerMTXItem(String name, MTXItem<T> item, Plugin plugin) {
-        return ITEMS.registerItem(name, item, plugin);
+    public static <T extends MTXItem<?>> IRegistrable<T> registerMTXItem(MTXItem<T> item, Plugin plugin) {
+        return ITEMS.registerItem(item, plugin);
     }
 
-    public static <T extends IAttachable<?>> IRegistrable<T> registerBindable(String name, IAttachable<T> bindable, Plugin plugin) {
-        return ATTACHABLES.registerItem(name, bindable, plugin);
+    public static <T extends IAttachable<?>> IRegistrable<T> registerBindable(IAttachable<T> bindable, Plugin plugin) {
+        return ATTACHABLES.registerItem(bindable, plugin);
     }
 
     public static MRegistry<Twist<?>> getTwists() {

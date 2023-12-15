@@ -2,6 +2,7 @@ package me.neo.mtxlib.api.item;
 
 import me.neo.mtxlib.MTXLib;
 import me.neo.mtxlib.api.core.interfaces.IERegistrable;
+import me.neo.mtxlib.api.item.interfaces.IInteractItem;
 import me.neo.mtxlib.util.Cooldown;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
@@ -125,6 +126,17 @@ public abstract class MTXItem<T> implements IERegistrable<T> {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         if (!event.hasItem() || !check(event.getItem())) return;
+
+        if (this instanceof IInteractItem ii) {
+            // call the events
+            switch (event.getAction()) {
+                case RIGHT_CLICK_AIR -> ii.rightClick(event.getPlayer(), event.getItem(), event.getPlayer().isSneaking(), event);
+                case LEFT_CLICK_AIR -> leftClick(event.getPlayer(), event.getItem(), event.getPlayer().isSneaking(), event);
+                case RIGHT_CLICK_BLOCK -> rightClickBlock(event.getPlayer(), event.getItem(), event.getClickedBlock(), event.getPlayer().isSneaking(), event);
+                case LEFT_CLICK_BLOCK -> leftClickBlock(event.getPlayer(), event.getItem(), event.getClickedBlock(), event.getPlayer().isSneaking(), event);
+                default -> {}
+            }
+        }
 
         switch (event.getAction()) {
             case RIGHT_CLICK_AIR -> rightClick(event.getPlayer(), event.getItem(), event.getPlayer().isSneaking(), event);

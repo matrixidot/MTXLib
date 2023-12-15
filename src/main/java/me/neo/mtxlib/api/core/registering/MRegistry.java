@@ -2,6 +2,7 @@ package me.neo.mtxlib.api.core.registering;
 
 import me.neo.mtxlib.MTXLib;
 import me.neo.mtxlib.api.core.interfaces.IRegistrable;
+import me.neo.mtxlib.api.customevents.RegisterIRegstrableEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class MRegistry<T> {
-    private final static HashMap<String, MRegistry<?>> registries = new HashMap<>();
+    private final static HashMap<String, MRegistry<?>> REGISTERS = new HashMap<>();
     private final String name;
     private final List<IRegistrable<T>> entries = new ArrayList<>();
 
@@ -25,21 +26,28 @@ public class MRegistry<T> {
         this.name = name;
     }
 
-    public <I extends T> IRegistrable<I> registerItem(String name, IRegistrable<I> reg, final Plugin plugin) {
+    public <I extends T> IRegistrable<I> registerItem(IRegistrable<I> toReg, final Plugin plugin) {
         if (isSealed)
             throw new UnsupportedOperationException("Cannot add item to registry after it is registered.");
-        Objects.requireNonNull(name);
-        Objects.requireNonNull(reg);
+        Objects.requireNonNull(toReg);
 
-        if (!entries.contains(reg))
-            entries.add((IRegistrable<T>) reg);
+        RegisterIRegstrableEvent event = new RegisterIRegstrableEvent(toReg);
+        Bukkit.getPluginManager().callEvent(event);
+
+        if (event.isCancelled()) {
+            MTXLib.log.info("Registering for: [" + toReg.getName() + "] was cancelled");
+            return null;
+        }
+
+        if (!entries.contains(toReg))
+            entries.add((IRegistrable<T>) toReg);
         else
-            throw new IllegalArgumentException("Duplicate attempting to be registered to " + name);
+            throw new IllegalArgumentException("Duplicate attempting to be registered to " + toReg.getName());
 
-        if (reg instanceof Listener l)
+        if (toReg instanceof Listener l)
             Bukkit.getPluginManager().registerEvents(l, plugin);
-        MTXLib.log.success("Successfully registered: [" + name + "] into registry: [" + name + "]");
-        return reg;
+        MTXLib.log.success("Successfully registered: [" + toReg.getName() + "] into registry: [" + toReg.getName() + "]");
+        return toReg;
     }
 
     /**
@@ -50,10 +58,11 @@ public class MRegistry<T> {
     public static void register(MRegistry<?> registry) {
         if (registry.isSealed())
             throw new UnsupportedOperationException("Attempted to register sealed registry");
-        if (registries.containsKey(registry.getName()))
+        if (REGISTERS.containsKey(registry.getName()))
             throw new UnsupportedOperationException("Attempted to register a registry with conflicting name: " + registry.getName());
 
         registry.seal();
+        REGISTERS.put(registry.getName(), registry);
         MTXLib.log.success("Sealed and registered registry: [" + registry.getName() + "]");
     }
 
